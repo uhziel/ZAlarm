@@ -3,7 +3,16 @@
 ##
 
 require 'sinatra'
+require 'sinatra/activerecord'
 enable :sessions
+
+##
+# databases
+##
+set :database, "sqlite3:ZAlarm.db"
+
+class Alarm < ActiveRecord::Base
+end
 
 # Load our dependencies and configuration settings
 $LOAD_PATH.push(File.expand_path(File.dirname(__FILE__)))
