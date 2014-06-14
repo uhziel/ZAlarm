@@ -62,6 +62,10 @@ helpers do
     our_note.title = note_title
     our_note.content = n_body
 
+    ## with reminder
+    our_note.attributes = Evernote::EDAM::Type::NoteAttributes.new
+    our_note.attributes.reminderTime = Time.now.to_i * 1000
+
     ## parent_notebook is optional; if omitted, default notebook is used
     if parent_notebook && parent_notebook.guid
       our_note.notebookGuid = parent_notebook.guid
@@ -196,7 +200,7 @@ __END__
 </body>
 </html>
 
-@@ error 
+@@ error
 <html>
 <head>
   <title>Evernote Ruby Example App &mdash; Error</title>
