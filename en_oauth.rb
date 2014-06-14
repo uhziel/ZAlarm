@@ -51,7 +51,7 @@ helpers do
     end
   end
 
-  def make_note(note_store, note_title, note_body, parent_notebook=nil)
+  def make_note(note_store, note_title, note_body, timestamp, parent_notebook=nil)
 
     n_body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
     n_body += "<!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\">"
@@ -64,7 +64,7 @@ helpers do
 
     ## with reminder
     our_note.attributes = Evernote::EDAM::Type::NoteAttributes.new
-    our_note.attributes.reminderTime = Time.now.to_i * 1000
+    our_note.attributes.reminderTime = timestamp * 1000
 
     ## parent_notebook is optional; if omitted, default notebook is used
     if parent_notebook && parent_notebook.guid
@@ -173,7 +173,11 @@ end
 # Create new note
 ##
 get '/createnote' do
-  make_note(note_store, "test", "hello, world!")
+  timestamp = Time.now.to_i
+  if params[:timestamp] != nil
+    timestamp = params[:timestamp].to_i
+  end
+  make_note(note_store, "test", "hello, world!",timestamp)
   erb :index
 end
 
