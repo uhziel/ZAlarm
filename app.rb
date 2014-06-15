@@ -95,7 +95,10 @@ helpers do
 
     ## Return created note object
     note
+  end
 
+  def delete_button(alarm_id)
+    erb :_delete_button, locals: { alarm_id: alarm_id }
   end
 end
 
@@ -233,6 +236,13 @@ put '/alarms/:id' do
   end
 end
 
+delete '/alarms/:id' do
+  @alarm = Alarm.find(params[:id])
+  if @alarm.destroy
+    redirect "/alarms"
+  end
+end
+
 __END__
 
 @@ index
@@ -276,8 +286,7 @@ __END__
   <ul>
 <% @alarms.each do |alarm| %>
   <li>
-    <h2><%= alarm.title %></h2>
-    <li><%= alarm.created_at %></li>
+    <%= alarm.title %> <%= alarm.alarm_time %> <%= delete_button(alarm.id) %>
   </li>
 <% end %>
 </ul>
@@ -337,3 +346,9 @@ __END__
   <h2><%= @alarm.title %> <%= @alarm.alarm_time %></h2>
 </body>
 </html>
+
+@@ _delete_button
+<form action="/alarms/<%= alarm_id %>" method="post">
+  <input type="hidden" name="_method" value="delete" />
+  <input type="submit" value="Delete Post" />
+</form>
