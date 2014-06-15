@@ -283,10 +283,11 @@ __END__
   <title>Your alarms</title>
 </head>
 <body>
+  <a href="/alarms/new">New Alarm</a>
   <ul>
 <% @alarms.each do |alarm| %>
   <li>
-    <%= alarm.title %> <%= alarm.alarm_time %> <%= delete_button(alarm.id) %>
+    <%= alarm.title %> <%= alarm.alarm_time %> <a href="/alarms/<%= alarm.id %>/edit">edit</a> <%= delete_button(alarm.id) %>
   </li>
 <% end %>
 </ul>
