@@ -242,7 +242,6 @@ __END__
 <% @alarms.each do |alarm| %>
   <li>
     <h2><%= alarm.title %></h2>
-    <li><%= alarm.body %></li>
     <li><%= alarm.created_at %></li>
   </li>
 <% end %>

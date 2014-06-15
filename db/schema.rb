@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140614122136) do
+ActiveRecord::Schema.define(version: 20140615012926) do
 
   create_table "alarms", force: true do |t|
     t.string   "title"
-    t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "alarm_time"
   end
 
 end
