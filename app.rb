@@ -198,6 +198,27 @@ get '/alarms' do
   erb :alarms
 end
 
+get '/alarms/new' do
+  @title = 'New Alarm'
+  @alarm = Alarm.new
+  erb :alarms_new
+end
+
+post '/alarms' do
+  @alarm = Alarm.new(params[:alarm])
+  if @alarm.save
+    redirect "/alarms/#{@alarm.id}"
+  else
+    erb :alarms_new
+  end
+end
+
+get '/alarms/:id' do
+  @alarm = Alarm.find(params[:id])
+  @title = @alarm.title
+  erb :alarms_show
+end
+
 __END__
 
 @@ index
@@ -246,5 +267,36 @@ __END__
   </li>
 <% end %>
 </ul>
+</body>
+</html>
+
+@@ alarms_new
+<html>
+<head>
+  <title>New Alarm</title>
+</head>
+<body>
+  <h1>New Alarm</h1>
+  <form action="/alarms" method="post">
+    <label for="alarm_title">Title:</label><br />
+    <input id="alarm_title" name="alarm[title]" type="text" value="<%= @alarm.title %>" />
+    <br />
+
+    <label for="alarm_alarm_time">Alarm Time:</label><br />
+    <input id="alarm_alarm_time" name="alarm[alarm_time]" type="datetime" />
+    <br />
+
+    <input type="submit" value="Create Alarm" />
+  </form>
+</body>
+</html>
+
+@@ alarms_show
+<html>
+<head>
+  <title>Show Alarm</title>
+</head>
+<body>
+  <h2><%= @alarm.title %> <%= @alarm.alarm_time %></h2>
 </body>
 </html>
