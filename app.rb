@@ -219,6 +219,20 @@ get '/alarms/:id' do
   erb :alarms_show
 end
 
+get '/alarms/:id/edit' do
+  @alarm = Alarm.find(params[:id])
+  erb :alarms_edit
+end
+
+put '/alarms/:id' do
+  @alarm = Alarm.find(params[:id])
+  if @alarm.update_attributes(params[:alarm])
+    redirect "/alarms/#{@alarm.id}"
+  else
+    erb :alarms_edit
+  end
+end
+
 __END__
 
 @@ index
@@ -287,6 +301,29 @@ __END__
     <br />
 
     <input type="submit" value="Create Alarm" />
+  </form>
+</body>
+</html>
+
+@@ alarms_edit
+<html>
+<head>
+  <title>Edit Alarm</title>
+</head>
+<body>
+  <h1>Edit Alarm</h1>
+  <form action="/alarms/<%= @alarm.id%>" method="post">
+    <input type="hidden" name="_method" value="put" />
+
+    <label for="alarm_title">Title:</label><br />
+    <input id="alarm_title" name="alarm[title]" type="text" value="<%= @alarm.title %>" />
+    <br />
+
+    <label for="alarm_alarm_time">Alarm Time:</label><br />
+    <input id="alarm_alarm_time" name="alarm[alarm_time]" type="datetime"  value="<%= @alarm.alarm_time %>"/>
+    <br />
+
+    <input type="submit" value="Edit Alarm" />
   </form>
 </body>
 </html>
