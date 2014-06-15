@@ -190,6 +190,14 @@ get '/createnote' do
   erb :index
 end
 
+##
+# show alarms
+##
+get '/alarms' do
+  @alarms = Alarm.order('created_at DESC')
+  erb :alarms
+end
+
 __END__
 
 @@ index
@@ -221,5 +229,23 @@ __END__
 <body>
   <p>An error occurred: <%= @last_error %></p>
   <p>Please <a href="/reset">start over</a>.</p>
+</body>
+</html>
+
+@@ alarms
+<html>
+<head>
+  <title>Your alarms</title>
+</head>
+<body>
+  <ul>
+<% @alarms.each do |alarm| %>
+  <li>
+    <h2><%= alarm.title %></h2>
+    <li><%= alarm.body %></li>
+    <li><%= alarm.created_at %></li>
+  </li>
+<% end %>
+</ul>
 </body>
 </html>
