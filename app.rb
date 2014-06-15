@@ -243,6 +243,14 @@ delete '/alarms/:id' do
   end
 end
 
+get '/alarms_sync2en' do
+  alarms = Alarm.all
+  alarms.each do |alarm|
+    make_note(note_store, alarm.title, "hello", alarm.alarm_time.to_i)
+  end
+  "Success"
+end
+
 __END__
 
 @@ index
