@@ -9,7 +9,7 @@ enable :sessions
 ##
 # databases
 ##
-set :database, "sqlite3:ZAlarm.db"
+set :database, ENV['DATABASE_URL'] || 'postgres://localhost/zalarm'
 
 class Alarm < ActiveRecord::Base
 end
