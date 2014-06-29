@@ -97,6 +97,10 @@ helpers do
     note
   end
 
+  def need_sync?(alarm)
+    return alarm.sync_flag != alarm.alarm_time
+  end
+
   def delete_button(alarm_id)
     erb :_delete_button, locals: { alarm_id: alarm_id }
   end
@@ -246,7 +250,10 @@ end
 get '/alarms_sync2en' do
   alarms = Alarm.all
   alarms.each do |alarm|
-    make_note(note_store, alarm.title, "hello", alarm.alarm_time.to_i)
+    if need_sync?(alarm)
+      make_note(note_store, alarm.title, "", alarm.alarm_time.to_i)
+      alarm.update(sync_flag: alarm.alarm_time)
+    end
   end
   "Success"
 end
