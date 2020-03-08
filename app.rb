@@ -113,6 +113,11 @@ get '/' do
   erb :index
 end
 
+get '/index.html' do
+  content_type 'html'
+  erb :angular
+end
+
 ##
 # Reset the session
 ##

@@ -1,0 +1,17 @@
+<form name="alarmForm" ng-sumbit="ok()">
+  <div class="control-group">
+    <label>提醒时间</label>
+    <input name="alarm_time" ng-model="alarm.alarm_time" required>
+  </div>
+
+  <div class="control-group">
+    <label>内容</label>
+    <input type="text" name="content" ng-model="alarm.content" required>
+  </div>
+
+  <br>
+  <div class="modal-footer">
+      <button class="btn btn-warning" ng-click="cancel()">退出</button>
+      <input type="submit" class="btn primary-btn" value="Submit">
+  </div>
+</form>
